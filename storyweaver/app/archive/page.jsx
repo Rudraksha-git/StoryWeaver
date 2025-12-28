@@ -37,7 +37,7 @@ export default function ArchivePage() {
     },
     {
       id: 2,
-      imageSrc: '/images/mahabharat.jpg',
+      imageSrc: '/images/battleOfLanka.png',
       title: 'Battle of Lanka',
       dialect: 'Hindi',
       region: 'South Asia',
@@ -57,16 +57,16 @@ export default function ArchivePage() {
   },
   {
     id: 2,
-    imageSrc: '/images/mahabharat.jpg',
-    title: 'The Indian Elephant',
+    imageSrc: '/images/persian.jpg',
+    title: 'The Persian War',
     dialect: 'Hindi',
     region: 'South Asia',
     description: 'Smart, scalable, intuitive, efficient, reliable, modern',
   },
   {
     id: 3,
-    imageSrc: '/images/mahabharat.jpg',
-    title: 'The Indian Elephant',
+    imageSrc: '/images/Recession.jpg',
+    title: 'The Great Recession',
     dialect: 'Hindi',
     region: 'South Asia',
     description: 'Smart, scalable, intuitive, efficient, reliable, modern',
@@ -74,7 +74,7 @@ export default function ArchivePage() {
   {
     id: 4,
     imageSrc: '/images/mahabharat.jpg',
-    title: 'The Indian Elephant',
+    title: 'The Odyssey',
     dialect: 'Hindi',
     region: 'South Asia',
     description: 'Smart, scalable, intuitive, efficient, reliable, modern',
