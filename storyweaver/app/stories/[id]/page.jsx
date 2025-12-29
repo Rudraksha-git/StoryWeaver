@@ -1,135 +1,152 @@
 "use client";
 
-import React, { useState } from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
-import { ArrowLeft, Play, Pause } from 'lucide-react';
+import React, { useState, useEffect } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { ArrowLeft, Play, Pause } from "lucide-react";
 
-// Mock story data
 const mockStory = {
-  id: '1',
-  title: 'The Origin of Rain',
-  elderName: 'Elder Awa',
-  recordingDate: '2024',
-  audioUrl: '/audio/placeholder.mp3', // Placeholder URL
-  coverImage: '/images/indianElder.jpeg', // Placeholder image
-  transcript: `Long ago, before the mountains touched the sky, the world was silent. The elders say that the first sound was not a voice, but the wind weaving through the cedar trees, carrying secrets from the North. In those days, the earth was parched and the rivers ran dry. The people waited, their hearts heavy with longing for the sky to open and bless the land with rain.
+  id: "1",
+  title: "The Origin of Rain",
+  elderName: "Elder Awa",
+  recordingDate: "2024",
+  audioUrl: "/audio/placeholder.mp3",
+  coverImage: "/images/indianElder.jpeg",
+  transcript: `Before paths were drawn and before villages learned to stay in one place, there stood a tree at the center of the plain. It was not the tallest, nor the oldest, but it listened better than any living thing.
 
-But the rain did not come from above. Instead, it came from the music. An old man, whose name has been forgotten by all but the oldest stories, sat beneath the great oak tree at the edge of the village. He had no words left to speak, for he had told every tale he knew. So he picked up his flute, carved from a branch that had once sheltered a family of birds, and began to play.
+The elders said the tree had roots so deep they touched yesterday.
 
-The notes rose like mist from the morning fields, curling upward into the empty sky. Each melody was a prayer, each breath a wish carried on the wind. The villagers gathered, drawn by the sound that seemed to speak the language of longing itself. Children stopped their games. Elders closed their eyes. Even the birds grew still.
+When people passed by, they would rest in its shade and speak without meaning to. They told the tree their worries, their hopes, and sometimes the names of those they had lost. The tree did not answer. It only listened. But it remembered every word.
 
-As the old man played, the clouds began to gather. Not the dark, angry clouds of storms, but soft, gentle clouds that drifted like white petals across the blue. The music climbed higher, and the clouds drew closer. Then, as the final note hung in the air like a question, the first drop fell.
+During dry years, when the wind scraped the earth bare and children counted clouds that never arrived, the people noticed something strange. At dawn, droplets formed on the tree’s leaves—even when the sky was clear. They fell slowly, one by one, darkening the dust below.
 
-It struck the dusty earth and sent up a small puff of dust. Then another fell. And another. Soon, the rain came in gentle sheets, washing the world clean. The people raised their faces to the sky, letting the water run down their cheeks like tears of joy. The old man kept playing, and the rain kept falling, until the rivers flowed again and the earth was green once more.
+An elder placed her palm against the trunk and felt a quiet warmth, like breath.
 
-From that day forward, whenever the land thirsted, the people would gather beneath the great oak tree. The oldest among them would take up the flute—the same flute, passed down through generations—and play the song of rain. And always, without fail, the clouds would answer.
+“These are not tears,” she said. “They are memories returning.”
 
-This is why we say that rain is not merely water falling from the sky, but music made visible. It is the earth's way of remembering the song that first called it back to life. And those who listen closely can still hear, in the patter of drops on leaves and the rush of water in streams, the echo of that first melody—the song that taught the sky how to weep.`,
-  aiContext: `The 'North' often symbolizes the ancestral spirit world in this region's folklore. Winds from that direction are believed to carry messages from departed elders. The flute, in many indigenous traditions, serves as a bridge between the human and spiritual realms, with its breath-controlled sound representing the life force itself.`
+That night, the villagers gathered. One by one, they spoke the names they feared would disappear: grandparents, travelers, children taken too soon. With each name, the tree’s branches stirred, though there was no wind.
+
+By morning, clouds gathered—not heavy with storm, but full and patient. Rain followed, steady and kind. The ground softened. Seeds long buried woke and pushed upward.
+
+From then on, when someone feared being forgotten, they would whisper their name to the tree. And when the land grew thirsty, the people returned—not to beg for rain, but to remember together.
+
+This is why, even now, when rain falls without warning, some say it is not the sky that speaks—but the earth, finally answering back.`,
+  aiContext:
+    "The 'North' often symbolizes the ancestral spirit world in this region's folklore.",
 };
 
-export default function StoryPlayerPage({ params }) {
+export default function StoryPlayerPage() {
   const [isPlaying, setIsPlaying] = useState(false);
+  const [waveformBars, setWaveformBars] = useState([]);
 
-  // Generate waveform bars (simulated)
-  const waveformBars = Array.from({ length: 60 }, () => 
-    Math.random() * 100
-  );
+  useEffect(() => {
+    setWaveformBars(
+      Array.from({ length: 36 }, () => Math.random() * 60 + 20)
+    );
+  }, []);
+
+  /* Optional: animate when playing */
+  useEffect(() => {
+    if (!isPlaying) return;
+
+    const interval = setInterval(() => {
+      setWaveformBars(
+        Array.from({ length: 36 }, () => Math.random() * 60 + 20)
+      );
+    }, 300);
+
+    return () => clearInterval(interval);
+  }, [isPlaying]);
 
   return (
-    <div className="min-h-screen bg-[#F7F4EF]">
+    <div className="min-h-screen bg-[#F6F3EE]">
       <div className="flex flex-col lg:flex-row">
-        {/* Left Sidebar - Fixed/Sticky on Desktop */}
-        <aside className="w-full lg:w-[450px] bg-[#F7F4EF] p-8 lg:sticky lg:top-0 lg:h-screen lg:overflow-y-auto flex flex-col gap-8">
-          {/* Back Navigation */}
-          <Link 
-            href="/archive" 
-            className="text-[#8B6F47] font-serif text-lg underline hover:text-[#C26D48] transition-colors flex items-center gap-2 group"
+
+        {/* LEFT SIDEBAR */}
+        <aside className="w-full lg:w-[420px] lg:h-screen lg:sticky lg:top-0 px-8 py-10 flex flex-col justify-between">
+
+          <Link
+            href="/archive"
+            className="flex items-center gap-2 text-sm font-serif text-[#8B6F47]"
           >
-            <ArrowLeft size={20} className="group-hover:-translate-x-1 transition-transform" />
-            Back To Archive
+            <ArrowLeft size={18} />
+            Back to Archive
           </Link>
 
-          {/* Album Art with Golden Border */}
-          <div className="flex justify-center">
-            <div className="relative w-full max-w-[400px] aspect-square rounded-xl overflow-hidden border-8 border-[#D4A574] shadow-lg">
-              <Image
-                src={mockStory.coverImage}
-                alt={mockStory.title}
-                fill
-                className="object-cover"
-              />
+          <div className="flex flex-col items-center text-center gap-8">
+
+            {/* Cover */}
+            <div className="relative">
+              <div className="absolute inset-0 rounded-[28px] bg-[#C26D48]/20 blur-3xl opacity-40" />
+              <div className="relative w-[240px] aspect-[3/4] rounded-[28px] overflow-hidden shadow-xl">
+                <Image
+                  src={mockStory.coverImage}
+                  alt={mockStory.title}
+                  fill
+                  className="object-cover"
+                />
+              </div>
             </div>
-          </div>
 
-          {/* Waveform Visualization */}
-          <div className="flex items-end justify-center gap-1 h-20 px-4">
-            {waveformBars.map((height, index) => (
-              <div
-                key={index}
-                className="bg-[#D4A574] rounded-full flex-1 min-w-[3px] transition-all duration-300 hover:opacity-80"
-                style={{ height: `${height}%`, minHeight: '8px' }}
-              />
-            ))}
-          </div>
+            {/* Title */}
+            <div>
+              <h1 className="text-2xl font-serif font-semibold">
+                {mockStory.title}
+              </h1>
+              <p className="text-xs tracking-widest uppercase text-[#C26D48]">
+                {mockStory.elderName} · {mockStory.recordingDate}
+              </p>
+            </div>
 
-          {/* Metadata */}
-          <div className="text-center space-y-2">
-            <h1 className="text-3xl font-serif font-bold italic text-[#8B6F47]">
-              {mockStory.title}
-            </h1>
-            <p className="text-lg font-serif text-[#8B6F47]/80">
-              Recorded by {mockStory.elderName}, {mockStory.recordingDate}
-            </p>
-          </div>
+            {/* Waveform */}
+            <div className="flex items-end gap-1 h-10">
+              {waveformBars.map((h, i) => (
+                <div
+                  key={i}
+                  className={`w-[3px] rounded-full transition-all ${
+                    isPlaying ? "bg-[#C26D48]" : "bg-[#C26D48]/40"
+                  }`}
+                  style={{ height: `${h}%` }}
+                />
+              ))}
+            </div>
 
-          {/* Player Controls */}
-          <div className="flex justify-center">
+            {/* Play Button */}
             <button
               onClick={() => setIsPlaying(!isPlaying)}
-              className="w-20 h-20 rounded-full bg-[#C26D48] hover:bg-[#A85A3A] transition-colors flex items-center justify-center shadow-lg hover:shadow-xl transform hover:scale-105 transition-transform"
-              aria-label={isPlaying ? 'Pause' : 'Play'}
+              className="w-16 h-16 rounded-full bg-[#C26D48] text-white flex items-center justify-center shadow-lg hover:scale-110 transition"
             >
               {isPlaying ? (
-                <Pause size={32} className="text-white ml-1" fill="white" />
+                <Pause size={26} fill="white" />
               ) : (
-                <Play size={32} className="text-white ml-1" fill="white" />
+                <Play size={26} fill="white" className="ml-1" />
               )}
             </button>
           </div>
+
+          <p className="text-[10px] tracking-[0.3em] text-center text-gray-300">
+            ORAL HISTORY ARCHIVE
+          </p>
         </aside>
 
-        {/* Right Content Area - Scrollable */}
-        <main className="flex-1 p-8 lg:p-12 bg-white">
-          <div className="max-w-4xl mx-auto">
-            {/* Story Transcript with Blue Border */}
-            <div className="border-2 border-blue-400 rounded-lg p-8 bg-white">
-              <div className="font-serif text-[#2C2C2C] leading-relaxed text-lg space-y-6">
-                {/* Split transcript into paragraphs for better formatting */}
-                {mockStory.transcript.split('\n\n').map((paragraph, index) => (
-                  <p key={index} className="mb-6">
-                    {paragraph}
-                  </p>
-                ))}
-              </div>
+        {/* RIGHT CONTENT */}
+        <main className="flex-1 bg-white px-6 sm:px-10 py-14">
+          <div className="max-w-3xl mx-auto font-serif text-black leading-[1.9] space-y-8">
+            {mockStory.transcript.split("\n\n").map((p, i) => (
+              <p key={i}>{p}</p>
+            ))}
 
-              {/* Context Card - Inline with text */}
-              <div className="mt-8 mb-4">
-                <div className="bg-[#222222] rounded-lg p-5 shadow-lg">
-                  <h3 className="text-xs font-serif font-bold text-white/70 uppercase tracking-wider mb-3">
-                    CULTURAL CONTEXT (GEMINI AI)
-                  </h3>
-                  <p className="text-white/90 font-serif text-sm leading-relaxed">
-                    {mockStory.aiContext}
-                  </p>
-                </div>
-              </div>
-            </div>
+            <aside className="mt-12 border-l-2 border-[#C26D48]/30 pl-6">
+              <h4 className="text-[10px] tracking-widest uppercase text-[#C26D48] mb-2">
+                Cultural Insight
+              </h4>
+              <p className="italic text-sm text-[#555]">
+                {mockStory.aiContext}
+              </p>
+            </aside>
           </div>
         </main>
       </div>
     </div>
   );
 }
-

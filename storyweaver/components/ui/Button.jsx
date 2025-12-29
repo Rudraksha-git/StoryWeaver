@@ -6,32 +6,21 @@ import { Globe } from 'lucide-react';
 
 const Button = ({ text, onClick, icon: Icon, variant = 'default', isSelected = false }) => {
   const baseClasses = `
-    group
-    flex items-center justify-center gap-2
-    font-serif text-xl font-medium tracking-wide
-    transition-all duration-300 ease-in-out
-    active:scale-95
-  `;
+  group inline-flex items-center justify-center gap-2
+  font-serif font-medium tracking-tight
+  transition-all duration-300 ease-out
+  hover:-translate-y-0.5 active:scale-95
+  disabled:opacity-50
+`;
 
-  const variantClasses = {
-    default: `
-      px-8 py-3
-      rounded-full
-      border border-[#C26D48]
-      bg-[#FFFFFF]
-      text-[#C26D48]
-      hover:bg-[#C26D48] hover:text-white
-    `,
-    region: `
-      px-6 py-2
-      rounded-full
-      border-0
-      ${isSelected 
-        ? 'bg-[#8B6F47] text-white' 
-        : 'bg-[#E8DCC6] text-[#8B6F47] hover:bg-[#D4C4A8]'
-      }
-    `
-  };
+const variantClasses = {
+  default: `
+    px-5 py-2 text-sm rounded-full
+    border border-[#C26D48] bg-white text-[#C26D48]
+    hover:bg-[#C26D48] hover:text-white
+    shadow-sm hover:shadow-md hover:shadow-[#C26D48]/20
+  `
+};
 
   return (
     <button

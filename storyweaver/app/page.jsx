@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { Mic, RefreshCcw, Sparkles, Archive } from 'lucide-react';
+import Navbar from '@/components/Navbar';
 
 export default function Page() {
   // Smooth scroll handler for anchor links
@@ -43,58 +44,6 @@ export default function Page() {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Navigation Bar */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16 md:h-20">
-            {/* Logo */}
-            <Link href="/" className="text-2xl md:text-3xl font-bold text-gray-900" style={{ fontFamily: 'var(--font-playfair)' }}>
-              StoryWeaver
-            </Link>
-
-            {/* Navigation Links */}
-            <div className="hidden md:flex items-center gap-8">
-              <button
-                onClick={(e) => handleSmoothScroll(e, 'hero')}
-                className="text-gray-700 hover:text-[#C07049] transition-colors duration-200 font-medium"
-                style={{ fontFamily: 'var(--font-inter)' }}
-              >
-                Mission
-              </button>
-              <button
-                onClick={(e) => handleSmoothScroll(e, 'how-it-works')}
-                className="text-gray-700 hover:text-[#C07049] transition-colors duration-200 font-medium"
-                style={{ fontFamily: 'var(--font-inter)' }}
-              >
-                How it works
-              </button>
-              <Link
-                href="/archive"
-                className="text-gray-700 hover:text-[#C07049] transition-colors duration-200 font-medium"
-                style={{ fontFamily: 'var(--font-inter)' }}
-              >
-                Archive
-              </Link>
-              <button
-                onClick={(e) => handleSmoothScroll(e, 'featured-stories')}
-                className="px-6 py-2 bg-[#C07049] text-white rounded-md hover:bg-[#A85D3A] transition-colors duration-200 font-medium"
-                style={{ fontFamily: 'var(--font-inter)' }}
-              >
-                Explore Stories
-              </button>
-            </div>
-
-            {/* Mobile Menu Button */}
-            <div className="md:hidden">
-              <button className="text-gray-700">
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-              </button>
-            </div>
-          </div>
-        </div>
-      </nav>
 
       {/* Hero Section */}
       <section id="hero" className="relative min-h-screen flex items-center justify-center bg-gray-900">
