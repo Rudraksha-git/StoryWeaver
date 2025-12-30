@@ -137,36 +137,97 @@ export default function AudioRecorder() {
   /* =======================
      SPEECH TO TEXT
   ======================= */
-  async function finishUpload() {
-    if (!audioBlob) {
-      alert("Please record audio first");
-      return;
-    }
+async function finishUpload() {
+  if (!audioBlob) {
+    alert("Please record audio first");
+    return;
+  }
 
+  try {
     setLoading(true);
 
+    /* =======================
+       1️⃣ SPEECH → TEXT
+    ======================= */
     const formData = new FormData();
     formData.append("audio", audioBlob);
     formData.append("languageCode", languageName || "hi-IN");
 
-
-    const res = await fetch("/api/transcribe", {
+    const transcribeRes = await fetch("/api/transcribe", {
       method: "POST",
       body: formData,
     });
 
-    const data = await res.json();
+    const transcribeData = await transcribeRes.json();
 
-    setLoading(false);
-
-    if (!res.ok) {
-      alert(data.error || "Transcription failed");
+    if (!transcribeRes.ok) {
+      alert(transcribeData.error || "Transcription failed");
       return;
     }
 
-    console.log("TRANSCRIPT:", data.transcript);
-    alert(`Transcript:\n\n${data.transcript}`);
-    // RESET STATE AFTER SUCCESS
+    const transcript = transcribeData.transcript;
+    console.log("TRANSCRIPT:", transcript);
+
+    /* =======================
+       2️⃣ STORY ANALYSIS
+    ======================= */
+    const analysisRes = await fetch("/api/story-analysis", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ transcript }),
+    });
+
+    const analysisData = await analysisRes.json();
+
+    if (!analysisRes.ok || !analysisData.success) {
+      alert("Story analysis failed");
+      return;
+    }
+
+    const analysis = analysisData.data;
+
+    /* =======================
+       3️⃣ UPLOAD AUDIO
+    ======================= */
+    const audioForm = new FormData();
+    audioForm.append("audio", audioBlob);
+
+    const uploadRes = await fetch("/api/upload", {
+      method: "POST",
+      body: audioForm,
+    });
+
+    const uploadData = await uploadRes.json();
+
+    if (!uploadRes.ok) {
+      alert("Audio upload failed");
+      return;
+    }
+
+    const audioUrl = uploadData.audioUrl;
+
+    /* =======================
+       4️⃣ SAVE TO FIRESTORE
+    ======================= */
+    await fetch("/api/stories", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        transcript,
+        analysis,
+        audioUrl,
+        languageCode: languageName || "hi-IN",
+        languageName,
+        region,
+        speakerName,
+      }),
+    });
+
+    alert("Story uploaded successfully!");
+
+    /* =======================
+       5️⃣ RESET STATE
+    ======================= */
     setSeconds(0);
     setFinalDuration(null);
     setAudioBlob(null);
@@ -174,7 +235,14 @@ export default function AudioRecorder() {
     setPaused(false);
     setRecording(false);
 
+  } catch (error) {
+    console.error("Finish upload error:", error);
+    alert("Something went wrong. Please try again.");
+  } finally {
+    setLoading(false);
   }
+}
+
 
   function formatTime(sec) {
     const m = String(Math.floor(sec / 60)).padStart(2, '0');
