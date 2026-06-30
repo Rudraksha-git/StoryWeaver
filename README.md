@@ -65,6 +65,22 @@ The result is a **living, community-driven cultural library**.
 
 ---
 
+## 🎨 UI / UX Design (Figma)
+
+The complete UI/UX design for **StoryWeaver** was created in Figma, covering the landing page, story recording flow, story listing, and story detail views.
+
+🔗 **Figma Design Link:**
+[https://www.figma.com/site/9tkTPJB1tNUSHE4NiuDfLB/StoryWeaver?node-id=0-1&p=f&t=GmS7S0ZUQFqYGbKh-0](https://www.figma.com/site/9tkTPJB1tNUSHE4NiuDfLB/StoryWeaver?node-id=0-1&p=f&t=GmS7S0ZUQFqYGbKh-0)
+
+The design emphasizes:
+
+* Accessibility for non-technical users
+* Clean, minimal storytelling-focused layouts
+* Mobile-first and responsive components
+* Intuitive navigation for browsing cultural archives
+
+---
+
 ## 🛠️ Tech Stack
 
 ### Frontend
@@ -285,7 +301,7 @@ GEMINI_API_KEY=
 ---
 ## 📌 Tagline
 
-**StoryWeaver — Preserving culture, one story at a time.**
+**StoryWeaver — Preserving voices, one story at a time.**
 
 ---
 
