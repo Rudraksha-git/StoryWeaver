@@ -19,7 +19,6 @@ export async function POST(req) {
 
     const aiResponse = await askGemini({ content: transcript });
 
-    // console.log(aiResponse.data.title)
     // format the output in correct json format
 
     const cleaned = aiResponse
@@ -27,7 +26,6 @@ export async function POST(req) {
       .replace(/```/g, "")
       .trim();
 
-    // console.log(cleaned)
 
     let jsonResponse;
 
@@ -41,14 +39,6 @@ export async function POST(req) {
         { status: 500 }
       );
     }
-    // console.log(jsonResponse)
-
-    // extract the information
-    
-    // console.log("Title ", jsonResponse.title);
-    // console.log("Translated text : ", jsonResponse.translatedText);
-    // console.log("culturalNotes : ", removeMd(jsonResponse.culturalNotes));
-    // console.log("summary : ", removeMd(jsonResponse.summary));
 
     const culturalNotes = Array.isArray(jsonResponse.culturalNotes)
       ? jsonResponse.culturalNotes.map(note => removeMd(note))
@@ -70,7 +60,6 @@ export async function POST(req) {
       { status: 200 }
     );
   } catch (error) {
-    console.log("Error in story-analysis: ", error);
 
     return NextResponse.json(
       {

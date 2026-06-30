@@ -30,8 +30,6 @@ export async function POST(req) {
       );
     }
 
-    console.log("Transcript" , transcript)
-
     const docRef = await addDoc(collection(db, "stories"), {
       transcript,
       title: analysis.title,
@@ -45,8 +43,6 @@ export async function POST(req) {
       speakerName,
       createdAt: serverTimestamp(),
     });
-
-    console.log("Document referemce : ",docRef)
 
     return NextResponse.json({
       success: true,
@@ -100,8 +96,6 @@ export async function GET(req) {
       id: doc.id,
       ...doc.data(),
     }));
-
-    // console.log(stories)
 
     return NextResponse.json({
       success: true,

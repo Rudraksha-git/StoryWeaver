@@ -33,8 +33,6 @@ export default function StoryPlayerPage() {
   useEffect(() => {
     async function fetchStory() {
       const res = await fetch(`/api/stories/${id}`);
-
-      console.log(res)
       const data = await res.json();
       if (data.success) {
         setStory({ id, ...data.story });

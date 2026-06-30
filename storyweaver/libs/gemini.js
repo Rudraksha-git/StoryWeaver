@@ -37,11 +37,7 @@ export async function askGemini({ content }) {
       },
     ],
   });
-
-//   console.log("GEMINI RESULT : ", result)
-
   const text = result.response.text();
-//   console.log(text)
 
   return text; 
 }

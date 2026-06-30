@@ -187,7 +187,6 @@ export default function AudioRecorder() {
       }
 
       const transcript = transcribeData.transcript;
-      console.log("TRANSCRIPT:", transcript);
 
       /* =======================
        2️⃣ STORY ANALYSIS
